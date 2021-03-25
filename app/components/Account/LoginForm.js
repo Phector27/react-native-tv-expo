@@ -89,7 +89,7 @@ export default function LoginForm(props) {
           onPress={onSubmit}
         />
         <View style={styles.noView}>
-          <UserLogged token={token}/>
+                  <UserLogged token={token} email={formData.user}/>
         </View>
       </View>
     </>
