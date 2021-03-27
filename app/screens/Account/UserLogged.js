@@ -1,75 +1,90 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Platform, Image } from "react-native";
+import { StyleSheet, View, Text, Platform, ScrollView } from "react-native";
 import { Button, Avatar, Divider } from "react-native-elements";
-import { map } from "lodash";
+import ContentMulti from "../Account/ContentMulti";
 
 export default function UserLogged(props) {
   const { token } = props;
-
   let platform = Platform.OS;
-  const tokenSaved = token;
-
+  let tokenSaved = token;
   const [formData, setFormData] = useState({
     token: tokenSaved,
     device: platform === "ios" ? "ios" : "android",
   });
+  const [userInfo, setUserInfo] = useState("");
+  const [contentInfo, setContentInfo] = useState([]);
+  const [showVideo, setShowVideo] = useState(false);
+  let contents;
+  let element;
 
-  const [userName, setUserName] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  const onSubmit = async () => {
+    const axios = require("axios");
+    const qs = require("qs");
+    let data = qs.stringify({
+      token: `${formData.tokenSaved}`,
+      device: `${formData.device}`,
+    });
+    let config = {
+      method: "post",
+      url: "https://dev.perseo.tv/ws/GetView.php",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: data,
+    };
 
-  var axios = require("axios");
-  var qs = require("qs");
-  var data = qs.stringify({
-    token: `${formData.token}`,
-    device: `${formData.device}`,
-  });
-  var config = {
-    method: "post",
-    url: "https://dev.perseo.tv/ws/GetView.php",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    data: data,
+    await axios(config)
+      .then(async (response) => {
+        await setUserInfo(response.data.user);
+
+        contents = response.data.contents;
+
+        let elementsInfo = [];
+
+        for (let index = 0; index < contents.length; index++) {
+          element = contents[index];
+          elementsInfo.push(element);
+        }
+        await setContentInfo(elementsInfo);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
   };
 
-  axios(config)
-    .then(function (response) {
-      setUserName(response.data.user.name);
-      setUserAvatar(response.data.user.avatar);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
   return (
-    <View>
-      <Text style={styles.titleLogIn}>Welcome to your private area </Text>
+    <ScrollView>
+      <Text style={styles.titleLogIn}>Welcome to your private area:</Text>
       <View style={styles.viewUserInfo}>
         <Avatar
-          source={{ uri: `${userAvatar}` }}
+          source={{ uri: `${userInfo.avatar}` }}
+          rounded
+          title="P"
           size="large"
           avatarStyle={styles.logo}
         />
-        <Text style={styles.nameUser}>{userName}</Text>
+        <Text style={styles.nameUser}>
+          {userInfo.name}
+          {"\n"}
+        </Text>
       </View>
       <Divider style={styles.divider} />
+
       <View>
-        <Text style={styles.favsTitle}>Favs ♡</Text>
+        <Text style={styles.favsTitle}>
+          {userInfo.avatar && "Content for you:"}
+        </Text>
       </View>
-      {/* <View>
-        {favs &&
-          map(favs, (id, index) => (
-            <Text key={index}>{id}</Text>
-          ))}
-      </View> */}
-      <View style={styles.btnCenter}>
-        <Button
-          title="View private area content"
-          containerStyle={styles.btnContainer}
-          buttonStyle={styles.btnGo}
-        />
+      <View>
+        <ContentMulti data={contentInfo} userInfo={userInfo} />
       </View>
-    </View>
+      <Button
+        title={userInfo.avatar ? null : "Please, press to see your content"}
+        containerStyle={styles.btnContainer}
+        buttonStyle={styles.btnGo}
+        onPress={onSubmit}
+      />
+    </ScrollView>
   );
 }
 
@@ -79,30 +94,26 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     marginTop: 10,
-    width: "50%",
   },
   btnGo: {
     backgroundColor: "#00a680",
-    width: "60%",
   },
   viewUserInfo: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     backgroundColor: "#f2f2f2",
-    paddingTop: 30,
-  },
-  logo: {
-    marginRight: 20,
+    paddingTop: 15,
   },
   favsTitle: {
     fontSize: 22,
     fontWeight: "bold",
-    marginLeft: 40,
+    textAlign: "center",
   },
   nameUser: {
     fontWeight: "bold",
     fontSize: 18,
+    marginLeft: 20,
   },
   titleLogIn: {
     fontWeight: "bold",
@@ -112,6 +123,32 @@ const styles = StyleSheet.create({
     color: "#454545",
   },
   divider: {
-    margin: 30,
+    marginLeft: 30,
+    marginRight: 30,
+    marginBottom: 20,
+  },
+  coverImg: {
+    height: 200,
+    width: "auto",
+    borderRadius: 20,
+    marginTop: 30,
+  },
+  viewPlay: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
+  play: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#00a680",
+    marginTop: -35,
+    marginRight: 110,
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+  },
+  infoMoviesContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
   },
 });

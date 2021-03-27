@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, ScrollView, Text } from "react-native";
 
 export default function Home() {
+
   return (
-    <View>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Text>Home</Text>
-    </View>
+    </ScrollView>
   );
 }
 

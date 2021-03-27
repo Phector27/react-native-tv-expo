@@ -32,7 +32,7 @@ function CreateAccount() {
   return (
     <Text style={styles.textRegister}>
       Don't have an account yet? {"  "}
-      <Text style={styles.btnRegister} onPress={() => console.log("Register")}>
+      <Text style={styles.btnRegister}>
         Register NOW!
       </Text>
     </Text>

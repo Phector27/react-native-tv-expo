@@ -20,20 +20,20 @@ export default function LoginForm(props) {
     setFormData({ ...formData, [type]: e.nativeEvent.text });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (isEmpty(formData.user) || isEmpty(formData.pass)) {
       toastRef.current.show("All fields must be completed");
     } else if (!validateEmail(formData.user)) {
       toastRef.current.show("Please, enter a valid email address");
     } else {
-      var axios = require("axios");
-      var qs = require("qs");
-      var data = qs.stringify({
+      const axios = require("axios");
+      const qs = require("qs");
+      let data = qs.stringify({
         user: formData.user,
         pass: formData.pass,
         device: formData.device,
       });
-      var config = {
+      let config = {
         method: "post",
         url: `${API_HOST}?user=${formData.user}&pass=${formData.pass}&device=${formData.device}`,
         headers: {
@@ -41,13 +41,13 @@ export default function LoginForm(props) {
         },
         data: data,
       };
-      axios(config)
-        .then(function (response) {
-          navigation.navigate("user-logged");
-          setToken(response.data.token);
+      await axios(config)
+        .then(async (response) => {
+          await setToken(response.data.token && response.data.token);
+          {response.data.authorized === true ? navigation.navigate("user-logged") : toastRef.current.show("Wrong email or password. Please, check it.")};
         })
         .catch(function (error) {
-          console.log(error);
+          alert("Error: ", error, "Please, contact with App administrator.");
         });
     }
   };
@@ -89,7 +89,7 @@ export default function LoginForm(props) {
           onPress={onSubmit}
         />
         <View style={styles.noView}>
-                  <UserLogged token={token} email={formData.user}/>
+          <UserLogged token={token && token} device={formData.device} />
         </View>
       </View>
     </>
