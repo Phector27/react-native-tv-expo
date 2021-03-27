@@ -12,6 +12,7 @@ import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import Carousel from "react-native-snap-carousel";
 import { secondsToHours } from "../../utils/secondsToHours";
+import { WebView } from "react-native-webview";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = Math.round(width * 0.7);
@@ -45,7 +46,7 @@ function RenderItem(props) {
           source={{ uri: `${cover}` }}
           onPress={onNavigation}
         />
-        <MovieView url={url} />
+        <MovieView url={url} id={id} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.sectionSpan}>{section}</Text>
         <Text style={styles.section}>
@@ -58,16 +59,18 @@ function RenderItem(props) {
 }
 
 function MovieView(props) {
-  const { url } = props;
+  const { url, id } = props;
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.viewPlay}>
       <IconButton
-        icon="play"
+        icon="eye"
         color="#00a680"
         size={30}
         style={styles.play}
-        onPress={() => Linking.openURL(`${url}`)}
+        onPress={() => navigation.navigate("movie", { id })}
       />
     </View>
   );

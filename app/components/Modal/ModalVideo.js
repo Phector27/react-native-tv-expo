@@ -1,13 +1,20 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Modal, IconButton, Title, Colors } from "react-native-paper";
+import { WebView } from "react-native-webview";
 
 export default function ModalVideo(props) {
-  const { show, setShow } = props;
+  const { show, setShow, idMovie, urlMovie } = props;
+
+  let widthScreen = Dimensions.get("window").width;
 
   return (
     <Modal visible={show} contentContainerStyle={styles.modal}>
-      <Title style={{ color: "white" }}>Hola Modal</Title>
+      <WebView
+        style={{ width: widthScreen }}
+        source={{ uri: `${urlMovie}` }}
+        allowsFullscreenVideo={true}
+      />
       <IconButton
         icon="close"
         color={Colors.white}

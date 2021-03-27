@@ -17,9 +17,10 @@ export default function Movie(props) {
   const [dataMovie, setDataMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
   // console.log(dataMovie && dataMovie)
-  {
-    dataMovie && console.log(dataMovie && dataMovie.cover);
-  }
+
+//   {
+//     dataMovie && console.log(dataMovie && dataMovie.cover);
+//   }
 
   useEffect(() => {
     getMovieByIdApi(id);
@@ -58,7 +59,7 @@ export default function Movie(props) {
         <MovieImage cover={dataMovie && dataMovie.cover} />
         <MovieTrailer setShowVideo={setShowVideo} />
       </ScrollView>
-      <ModalVideo show={showVideo} setShow={setShowVideo} />
+          <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} urlMovie={dataMovie && dataMovie.url}/>
     </>
   );
 }

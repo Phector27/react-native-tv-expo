@@ -28,7 +28,7 @@ export default function LoginForm(props) {
       const axios = require("axios");
       const qs = require("qs");
       let data = qs.stringify({
-        user: formData.user,
+        user: formData.user.toLowerCase(),
         pass: md5(formData.pass),
         device: formData.device,
       });

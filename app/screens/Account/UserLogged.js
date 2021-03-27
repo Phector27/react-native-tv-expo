@@ -62,7 +62,7 @@ export default function UserLogged(props) {
   
   return (
     
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.titleLogIn}>Welcome to your private area:</Text>
       <View style={styles.viewUserInfo}>
         <Avatar
