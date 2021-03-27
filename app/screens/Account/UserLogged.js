@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Platform, ScrollView } from "react-native";
-import { Button, Avatar, Divider } from "react-native-elements";
+import { Avatar, Divider } from "react-native-elements";
+import { API_GET } from "../../utils/constants";
 import ContentMulti from "../Account/ContentMulti";
 
 export default function UserLogged(props) {
-  const { token } = props;
+  const { token, navigation } = props;
+  const tokenSaved = token;
+  
+
   let platform = Platform.OS;
-  let tokenSaved = token;
   const [formData, setFormData] = useState({
     token: tokenSaved,
     device: platform === "ios" ? "ios" : "android",
@@ -14,6 +17,7 @@ export default function UserLogged(props) {
   const [userInfo, setUserInfo] = useState("");
   const [contentInfo, setContentInfo] = useState([]);
   const [showVideo, setShowVideo] = useState(false);
+
   let contents;
   let element;
 
@@ -26,7 +30,7 @@ export default function UserLogged(props) {
     });
     let config = {
       method: "post",
-      url: "https://dev.perseo.tv/ws/GetView.php",
+      url: `${API_GET}`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -49,10 +53,15 @@ export default function UserLogged(props) {
       })
       .catch(function (error) {
         alert(error);
-      });
+      })
   };
 
+
+
+  {userInfo ? null : onSubmit()}
+  
   return (
+    
     <ScrollView>
       <Text style={styles.titleLogIn}>Welcome to your private area:</Text>
       <View style={styles.viewUserInfo}>
@@ -76,14 +85,8 @@ export default function UserLogged(props) {
         </Text>
       </View>
       <View>
-        <ContentMulti data={contentInfo} userInfo={userInfo} />
+        <ContentMulti data={contentInfo} userInfo={userInfo} navigation={navigation}/>
       </View>
-      <Button
-        title={userInfo.avatar ? null : "Please, press to see your content"}
-        containerStyle={styles.btnContainer}
-        buttonStyle={styles.btnGo}
-        onPress={onSubmit}
-      />
     </ScrollView>
   );
 }

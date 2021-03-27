@@ -3,55 +3,54 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   Dimensions,
   TouchableWithoutFeedback,
   Linking,
 } from "react-native";
+import { Image } from "react-native-elements";
 import { IconButton } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import Carousel from "react-native-snap-carousel";
+import { secondsToHours } from "../../utils/secondsToHours";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = Math.round(width * 0.7);
 
 export default function ContentMulti(props) {
-  const { data, userInfo } = props;
+  const { data, userInfo, navigation } = props;
 
   return (
     <Carousel
       layout={"default"}
       data={data}
-      renderItem={(item) => <RenderItem data={item} />}
+      renderItem={(item) => <RenderItem data={item} navigation={navigation} />}
       sliderWidth={width}
       itemWidth={ITEM_WIDTH}
     />
   );
 }
 
-function secondsToString(seconds) {
-  let hour = Math.floor(seconds / 3600);
-  hour = hour < 10 ? "0" + hour : hour;
-  let minute = Math.floor((seconds / 60) % 60);
-  minute = minute < 10 ? "0" + minute : minute;
-  let second = seconds % 60;
-  second = second < 10 ? "0" + second : second;
-  return hour + ":" + minute + ":" + second;
-}
-
 function RenderItem(props) {
-  const { data } = props;
-  const { title, cover, duration, section, url } = data.item;
+  const { data, navigation } = props;
+  const { title, cover, duration, section, url, id } = data.item;
 
+  const onNavigation = () => {
+    navigation.navigate("movie", { id });
+  };
   return (
-    <TouchableWithoutFeedback onPress={() => console.log("hola")}>
+    <TouchableWithoutFeedback>
       <View style={styles.card}>
-        <Image style={styles.image} source={{ uri: `${cover}` }} />
+        <Image
+          style={styles.image}
+          source={{ uri: `${cover}` }}
+          onPress={onNavigation}
+        />
         <MovieView url={url} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.sectionSpan}>{section}</Text>
         <Text style={styles.section}>
           <Text style={styles.sectionSpan}>Duration: </Text>
-          {secondsToString(duration)}
+          {secondsToHours(duration)}
         </Text>
       </View>
     </TouchableWithoutFeedback>
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 10,
     width: "70%",
+    marginBottom: 50,
   },
   image: {
     width: "100%",

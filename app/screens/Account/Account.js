@@ -12,7 +12,7 @@ export default function Account() {
   //   });
   // }, []);
 
-  if (login === !null) return <Loading isVisible={true} text="Loading..." />;
+  // if (login === !null) return <Loading isVisible={true} text="Loading..." />;
 
   return login ? <UserLogged /> : <UserGuest />;
 }

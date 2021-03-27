@@ -3,17 +3,16 @@ import { StyleSheet, View, Platform, Image } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { isEmpty } from "lodash";
 import { useNavigation } from "@react-navigation/native";
+import md5 from 'md5'
 import { validateEmail } from "../../utils/validations";
 import UserLogged from "../../screens/Account/UserLogged";
 import { API_HOST } from "../../utils/constants";
 
 export default function LoginForm(props) {
   const { toastRef } = props;
-
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(defaultFormValue());
   const [token, setToken] = useState("");
-
   const navigation = useNavigation();
 
   const onChange = (e, type) => {
@@ -30,12 +29,13 @@ export default function LoginForm(props) {
       const qs = require("qs");
       let data = qs.stringify({
         user: formData.user,
-        pass: formData.pass,
+        pass: md5(formData.pass),
         device: formData.device,
       });
+
       let config = {
         method: "post",
-        url: `${API_HOST}?user=${formData.user}&pass=${formData.pass}&device=${formData.device}`,
+        url: `${API_HOST}`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
