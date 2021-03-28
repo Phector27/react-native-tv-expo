@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StyleSheet, View, Text, ScrollView, Image } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Image, Linking, Webview } from "react-native";
 import { Divider } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-easy-toast";
@@ -29,10 +29,17 @@ export default function Login() {
 }
 
 function CreateAccount() {
+
+  const url = 'https://perseo.tv/'
+
+  const registerBtn = () => {
+    Linking.openURL(url)
+  }
+ 
   return (
     <Text style={styles.textRegister}>
       Don't have an account yet? {"  "}
-      <Text style={styles.btnRegister}>
+      <Text style={styles.btnRegister} onPress={registerBtn}>
         Register NOW!
       </Text>
     </Text>

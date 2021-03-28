@@ -13,7 +13,6 @@ export default function Navigation() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="account"
-        
         tabBarOptions={{
           inactiveTintColor: "#646464",
           activeTintColor: "#00a680",
@@ -26,12 +25,12 @@ export default function Navigation() {
         <Tab.Screen
           name="account"
           component={AccountStack}
-          options={{ title: "Profile" }}
+          options={{ title: "Profile", tabBarVisible: false  }}
         />
         <Tab.Screen
           name="search"
           component={SearchStack}
-          options={{ title: "Search" }}
+          options={{ title: "Search"}}
         />
       </Tab.Navigator>
     </NavigationContainer>

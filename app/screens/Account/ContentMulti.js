@@ -99,14 +99,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 10,
     width: "70%",
-    marginBottom: 50,
   },
   viewFavourites: {
     position: "absolute",
   },
   image: {
     width: "100%",
-    height: 300,
+    height: 275,
     borderRadius: 20,
     marginTop: 20,
   },

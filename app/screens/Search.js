@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { Button } from "react-native-elements";
 import { map } from "lodash";
 import { PASSWORD, API_GET } from "../utils/constants";
 
@@ -64,19 +65,36 @@ export default function Search(props) {
       });
   };
 
+  const searchFor = (search) => {
+    const copyData = [...contentInfo];
+    const filterMovies = copyData.filter((elm) =>
+      elm.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setContentInfo(filterMovies);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Searchbar
         placeholder="Search movie"
-        onChangeText={(e) => setSearch(e)}
+        placeholderTextColor= 'white'
+        onChangeText={searchFor}
         style={styles.searchBar}
         iconColor="white"
       />
       <ScrollView>
         <View style={styles.container}>
           {map(contentInfo, (movie, index) => (
-            <SearchMovie key={index} movie={movie} />
+            <SearchMovie key={index} movie={movie} navigation={navigation} />
           ))}
+        </View>
+        <View style={styles.viewBtn}>
+          <Button
+            title="Reload all movies ♻️"
+            onPress={getData}
+            buttonStyle={styles.btnStyle}
+            containerStyle={styles.btnContainer}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -84,11 +102,13 @@ export default function Search(props) {
 }
 
 function SearchMovie(props) {
-  const { movie } = props;
-  const { cover } = movie;
+  const { movie, navigation } = props;
+  const { id, cover } = movie;
 
   return (
-    <TouchableWithoutFeedback onPress={() => console.log("clic")}>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate("movie", { id })}
+    >
       <View style={styles.movie}>
         <Image style={styles.imageSearch} source={{ uri: `${cover}` }} />
         <Text style={styles.movieTitle}>{movie.title}</Text>
@@ -136,5 +156,20 @@ const styles = StyleSheet.create({
   section: {
     color: "#c1c1c1",
     textAlign: "center",
+  },
+  viewBtn: {
+    flex: 1,
+    alignItems: "center",
+    color: "#000",
+    marginTop: 25,
+    marginBottom: 300,
+  },
+  btnStyle: {
+    backgroundColor: "#c1c1c1",
+    color: "black",
+    borderRadius: 50,
+  },
+  btnContainer: {
+    width: "50%",
   },
 });

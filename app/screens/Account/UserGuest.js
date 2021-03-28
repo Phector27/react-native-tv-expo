@@ -9,7 +9,7 @@ export default function UserGuest() {
   return (
     <ScrollView centerContent={true} style={styles.viewBody}>
       <Image
-        source={require("../../../assets/img/pixlr-bg-result(1).png")}
+        source={require("../../../assets/img/user-gest.png")}
         resizeMode="contain"
         style={styles.image}
       />
@@ -33,7 +33,6 @@ export default function UserGuest() {
 
 const styles = StyleSheet.create({
   viewBody: {
-    backgroundColor: "#15212b",
     paddingTop: 150,
   },
   image: {
@@ -45,16 +44,17 @@ const styles = StyleSheet.create({
     fontSize: 19,
     marginBottom: 10,
     textAlign: "center",
-    color: "#c1c1c1",
+    color: "black",
     marginRight: 30,
     marginLeft: 30,
+    marginTop: 10,
   },
   description: {
     textAlign: "center",
     marginBottom: 20,
     marginRight: 30,
     marginLeft: 30,
-    color: "#c1c1c1",
+    color: "black",
   },
   viewBtn: {
     flex: 1,

@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Platform,
-  ScrollView,
-  Icon,
-} from "react-native";
-import { Avatar, Divider } from "react-native-elements";
-import { API_GET, PASSWORD } from "../../utils/constants"
+import { StyleSheet, View, Text, Platform, ScrollView } from "react-native";
+import { Avatar, Divider, Button } from "react-native-elements";
+import { API_GET, PASSWORD } from "../../utils/constants";
 import ContentMulti from "../Account/ContentMulti";
 
 export default function UserLogged(props) {
@@ -91,7 +84,14 @@ export default function UserLogged(props) {
           navigation={navigation}
         />
       </View>
-      <View style={styles.noView}></View>
+      <View style={styles.viewBtn}>
+        <Button
+          title="Search by name 🔎"
+          buttonStyle={styles.btnStyle}
+          containerStyle={styles.btnContainer}
+          onPress={() => navigation.navigate("search")}
+        />
+      </View>
     </ScrollView>
   );
 }
@@ -120,12 +120,13 @@ const styles = StyleSheet.create({
   },
   nameUser: {
     fontWeight: "bold",
-    fontSize: 18,
-    marginLeft: 20,
+    fontSize: 16,
+    marginLeft: 10,
+    marginTop: 15,
   },
   titleLogIn: {
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 20,
     textAlign: "center",
     marginTop: 20,
     color: "#454545",
@@ -133,7 +134,8 @@ const styles = StyleSheet.create({
   divider: {
     marginLeft: 30,
     marginRight: 30,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 5,
   },
   coverImg: {
     height: 200,
@@ -159,7 +161,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
   },
-  noView: {
-    display: "none",
+  viewBtn: {
+    flex: 1,
+    alignItems: "center",
+    color: "#000",
+    marginTop: 25,
+    marginBottom: 50,
+  },
+  btnStyle: {
+    backgroundColor: "#c1c1c1",
+    color: "black",
+    borderRadius: 50,
+  },
+  btnContainer: {
+    width: "50%",
   },
 });

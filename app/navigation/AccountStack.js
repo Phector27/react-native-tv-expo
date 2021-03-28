@@ -14,10 +14,9 @@ export default function AccountStack() {
         name="account"
         component={Account}
         options={{
-          title: "Account",
+          title: "📺 Discover Perseo TV 📺",
           headerTitleAlign: { alignSelf: "center" },
           headerTransparent: true,
-          headerTintColor: "#fff",
         }}
       />
       <Stack.Screen
@@ -34,7 +33,8 @@ export default function AccountStack() {
         options={{
           title: "Private Area 🔓",
           headerTitleAlign: { alignSelf: "center" },
-          
+          headerLeft: null,
+          gesturesEnabled: false,
         }}
       />
       <Stack.Screen
