@@ -4,28 +4,25 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
 import SearchStack from "./SearchStack";
 import AccountStack from "./AccountStack";
-import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
+
   return (
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="account"
+        
         tabBarOptions={{
           inactiveTintColor: "#646464",
           activeTintColor: "#00a680",
         }}
+        
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color }) => screenOptions(route, color),
         })}
       >
-        <Tab.Screen
-          name="home"
-          component={HomeStack}
-          options={{ title: "Home" }}
-        />
         <Tab.Screen
           name="account"
           component={AccountStack}
@@ -45,9 +42,6 @@ function screenOptions(route, color) {
   let iconName;
 
   switch (route.name) {
-    case "home":
-      iconName = "home-variant-outline";
-      break;
     case "account":
       iconName = "account-circle-outline";
       break;

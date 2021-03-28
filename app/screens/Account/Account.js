@@ -3,16 +3,10 @@ import Loading from "../../components/Loading/Loading";
 import UserGuest from "./UserGuest";
 import UserLogged from "./UserLogged";
 
-export default function Account() {
-  const [login, setLogin] = useState(null);
+export default function Account(props) {
+  const [login, setLogin] = useState(false);
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     !user ? setLogin(false) : setLogin(true);
-  //   });
-  // }, []);
-
-  // if (login === !null) return <Loading isVisible={true} text="Loading..." />;
+  // setLogin(userInfo ? setLogin(false) : setLogin(true))
 
   return login ? <UserLogged /> : <UserGuest />;
 }

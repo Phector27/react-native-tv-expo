@@ -16,6 +16,7 @@ export default function Movie(props) {
   const { id } = route.params;
   const [dataMovie, setDataMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
+  
 
   useEffect(() => {
     getMovieByIdApi(id);

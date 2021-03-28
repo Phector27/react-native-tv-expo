@@ -16,6 +16,8 @@ export default function AccountStack() {
         options={{
           title: "Account",
           headerTitleAlign: { alignSelf: "center" },
+          headerTransparent: true,
+          headerTintColor: "#fff",
         }}
       />
       <Stack.Screen
@@ -32,6 +34,7 @@ export default function AccountStack() {
         options={{
           title: "Private Area 🔓",
           headerTitleAlign: { alignSelf: "center" },
+          
         }}
       />
       <Stack.Screen
@@ -40,7 +43,7 @@ export default function AccountStack() {
         options={{
           title: "",
           headerTitleAlign: { alignSelf: "center" },
-          headerTintColor: '#fff',
+          headerTintColor: "#fff",
           headerTransparent: true,
         }}
       />

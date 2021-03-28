@@ -10,7 +10,11 @@ export default function SearchStack() {
       <Stack.Screen
         name="search"
         component={Search}
-        options={{ title: "Search" }}
+        options={{
+          title: "",
+          headerTitleAlign: { alignSelf: "center" },
+          headerTransparent: true,
+        }}
       />
     </Stack.Navigator>
   );

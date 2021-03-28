@@ -5,12 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function UserGuest() {
   const navigation = useNavigation();
-  
 
   return (
     <ScrollView centerContent={true} style={styles.viewBody}>
       <Image
-        source={require("../../../assets/img/user-gest.png")}
+        source={require("../../../assets/img/pixlr-bg-result(1).png")}
         resizeMode="contain"
         style={styles.image}
       />
@@ -25,7 +24,7 @@ export default function UserGuest() {
           title="Go to profile"
           buttonStyle={styles.btnStyle}
           containerStyle={styles.btnContainer}
-          onPress={() => navigation.navigate('login')}
+          onPress={() => navigation.navigate("login")}
         />
       </View>
     </ScrollView>
@@ -34,24 +33,28 @@ export default function UserGuest() {
 
 const styles = StyleSheet.create({
   viewBody: {
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
+    backgroundColor: "#15212b",
+    paddingTop: 150,
   },
   image: {
     height: 300,
     width: "100%",
-    marginBottom: 40,
   },
   title: {
     fontWeight: "bold",
     fontSize: 19,
     marginBottom: 10,
     textAlign: "center",
+    color: "#c1c1c1",
+    marginRight: 30,
+    marginLeft: 30,
   },
   description: {
     textAlign: "center",
     marginBottom: 20,
+    marginRight: 30,
+    marginLeft: 30,
+    color: "#c1c1c1",
   },
   viewBtn: {
     flex: 1,

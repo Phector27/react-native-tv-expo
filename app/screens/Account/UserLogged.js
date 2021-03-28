@@ -1,27 +1,36 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Platform, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  ScrollView,
+  Icon,
+} from "react-native";
 import { Avatar, Divider } from "react-native-elements";
-import { API_GET } from "../../utils/constants";
+import { API_GET, PASSWORD } from "../../utils/constants"
 import ContentMulti from "../Account/ContentMulti";
 
 export default function UserLogged(props) {
   const { token, navigation } = props;
   const tokenSaved = token;
-  
 
-  let platform = Platform.OS;
   const [formData, setFormData] = useState({
     token: tokenSaved,
     device: platform === "ios" ? "ios" : "android",
   });
   const [userInfo, setUserInfo] = useState("");
   const [contentInfo, setContentInfo] = useState([]);
-  const [showVideo, setShowVideo] = useState(false);
 
+  useEffect(() => {
+    getData();
+  }, []);
+
+  let platform = Platform.OS;
   let contents;
   let element;
 
-  const onSubmit = async () => {
+  const getData = async () => {
     const axios = require("axios");
     const qs = require("qs");
     let data = qs.stringify({
@@ -36,15 +45,11 @@ export default function UserLogged(props) {
       },
       data: data,
     };
-
     await axios(config)
       .then(async (response) => {
         await setUserInfo(response.data.user);
-
         contents = response.data.contents;
-
         let elementsInfo = [];
-
         for (let index = 0; index < contents.length; index++) {
           element = contents[index];
           elementsInfo.push(element);
@@ -53,16 +58,11 @@ export default function UserLogged(props) {
       })
       .catch(function (error) {
         alert(error);
-      })
+      });
   };
 
-
-
-  {userInfo ? null : onSubmit()}
-  
   return (
-    
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.loggedView}>
       <Text style={styles.titleLogIn}>Welcome to your private area:</Text>
       <View style={styles.viewUserInfo}>
         <Avatar
@@ -85,8 +85,13 @@ export default function UserLogged(props) {
         </Text>
       </View>
       <View>
-        <ContentMulti data={contentInfo} userInfo={userInfo} navigation={navigation}/>
+        <ContentMulti
+          data={contentInfo}
+          userInfo={userInfo}
+          navigation={navigation}
+        />
       </View>
+      <View style={styles.noView}></View>
     </ScrollView>
   );
 }
@@ -105,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
+
     paddingTop: 15,
   },
   favsTitle: {
@@ -153,5 +158,8 @@ const styles = StyleSheet.create({
   infoMoviesContainer: {
     flex: 1,
     justifyContent: "flex-start",
+  },
+  noView: {
+    display: "none",
   },
 });
