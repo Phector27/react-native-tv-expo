@@ -76,8 +76,8 @@ export default function Search(props) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Searchbar
-        placeholder="Search movie"
-        placeholderTextColor= 'white'
+        placeholder="Search movie..."
+        placeholderTextColor="white"
         onChangeText={searchFor}
         style={styles.searchBar}
         iconColor="white"

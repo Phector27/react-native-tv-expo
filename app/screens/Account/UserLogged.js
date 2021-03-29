@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Platform, ScrollView } from "react-native";
 import { Avatar, Divider, Button } from "react-native-elements";
-import { API_GET, PASSWORD } from "../../utils/constants";
+import { API_GET } from "../../utils/constants";
 import ContentMulti from "../Account/ContentMulti";
 
 export default function UserLogged(props) {

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { IconButton } from "react-native-paper";
 import ModalVideo from "../../components/Modal/ModalVideo";
+import { PASSWORD } from "../../utils/constants";
 import { secondsToHours } from "../../utils/secondsToHours";
 
 export default function Movie(props) {
@@ -16,7 +17,6 @@ export default function Movie(props) {
   const { id } = route.params;
   const [dataMovie, setDataMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
-  
 
   useEffect(() => {
     getMovieByIdApi(id);
@@ -27,7 +27,7 @@ export default function Movie(props) {
     const axios = require("axios");
     const qs = require("qs");
     let data = qs.stringify({
-      token: "e77989ed21758e78331b20e477fc5582",
+      token: `${PASSWORD}`,
       device: platform === "ios" ? "ios" : "android",
       id: `${idMovie}`,
     });
@@ -45,7 +45,7 @@ export default function Movie(props) {
         await setDataMovie(response.data);
       })
       .catch((error) => {
-        alert('Error: ', error, 'Please, contact with an admin App.');
+        alert("Error: ", error, "Please, contact with an admin App.");
       });
   };
 
